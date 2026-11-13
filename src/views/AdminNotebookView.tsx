@@ -171,7 +171,7 @@ export const AdminNotebookView: React.FC<AdminNotebookViewProps> = ({
                 type="password"
                 value={pinInput}
                 onChange={(e) => setPinInput(e.target.value)}
-                placeholder="PIN (Padrão: 1234)"
+                placeholder="PIN"
                 required
                 autoFocus
                 className="w-full px-4 py-3.5 rounded-2xl bg-[#160933]/90 border-2 border-white/20 font-display text-2xl font-black text-center tracking-widest text-amber-300 placeholder:text-violet-400/40 focus:outline-none focus:border-amber-300"
