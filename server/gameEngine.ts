@@ -69,6 +69,11 @@ export class GameEngine {
         this.saveToDisk();
       }
       // Garantir que a duração padrão de 30s seja aplicada
+      if (this.room.config.round4Goals.minAccuracyThreshold === 80) {
+        this.room.config.round4Goals.minAccuracyThreshold =
+          DEFAULT_REMUNERATION_CONFIG.round4Goals.minAccuracyThreshold;
+        this.saveToDisk();
+      }
       if (this.room.config.roundDurationSeconds === 60) {
         this.room.config.roundDurationSeconds = DEFAULT_REMUNERATION_CONFIG.roundDurationSeconds;
         this.room.roundDurationMs = this.room.config.roundDurationSeconds * 1000;

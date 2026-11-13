@@ -28,7 +28,7 @@ export const DEFAULT_REMUNERATION_CONFIG: RemunerationConfig = {
     tier95to100: 600,
   },
   round4Goals: {
-    minAccuracyThreshold: 80,
+    minAccuracyThreshold: 90,
     target1MinCircles: 5,
     target1Reward: 500,
     target2MinCircles: 8,

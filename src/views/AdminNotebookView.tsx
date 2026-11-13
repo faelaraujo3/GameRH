@@ -993,10 +993,14 @@ export const AdminNotebookView: React.FC<AdminNotebookViewProps> = ({
               </div>
 
               <div className="p-3.5 rounded-xl bg-[#160933]/90 border border-white/10 sm:col-span-2 space-y-2">
-                <div className="text-emerald-300">Rodada 4 — Metas (R$)</div>
+                <div className="text-emerald-300">
+                  Rodada 4 — Metas (Círculos com precisão ≥ {configDraft.round4Goals.minAccuracyThreshold}% • R$)
+                </div>
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <span className="text-[10px] text-violet-300 block">5 a 7 círculos (≥80%)</span>
+                    <span className="text-[10px] text-violet-300 block">
+                      5 a 7 círculos (≥{configDraft.round4Goals.minAccuracyThreshold}%)
+                    </span>
                     <input
                       type="number"
                       value={configDraft.round4Goals.target1Reward}
@@ -1013,7 +1017,9 @@ export const AdminNotebookView: React.FC<AdminNotebookViewProps> = ({
                     />
                   </div>
                   <div>
-                    <span className="text-[10px] text-violet-300 block">8+ círculos (≥80%)</span>
+                    <span className="text-[10px] text-violet-300 block">
+                      8+ círculos (≥{configDraft.round4Goals.minAccuracyThreshold}%)
+                    </span>
                     <input
                       type="number"
                       value={configDraft.round4Goals.target2Reward}

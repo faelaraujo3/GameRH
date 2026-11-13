@@ -70,7 +70,7 @@ Caso queira deixar o jogo hospedado permanentemente na nuvem:
    - Vale apenas o círculo de **maior precisão** da rodada (até **R$ 600,00** para precisão ≥ 95%).
 5. **Rodada 4 — Remuneração por Metas (30s)**:
    - Clique em **"Avançar para Rodada 4"** e depois em **"Iniciar Rodada 4 (30s)"**.
-   - Meta: produzir pelo menos 5 círculos com precisão ≥ 80% (**R$ 500,00**) ou 8+ círculos com precisão ≥ 80% (**R$ 800,00** substitutivo).
+   - Meta: produzir pelo menos 5 círculos com precisão ≥ 90% (**R$ 500,00**) ou 8+ círculos com precisão ≥ 90% (**R$ 800,00** substitutivo).
 6. **Rodada 5 — Remuneração por Competências (30s)**:
    - Clique em **"Avançar para Rodada 5"** e depois em **"Iniciar Rodada 5 (30s)"**.
    - Exige mínimo de 5 círculos válidos e remunera pela **média de precisão dos últimos 5 círculos válidos** (até **R$ 600,00**).
