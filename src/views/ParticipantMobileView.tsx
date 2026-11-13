@@ -15,6 +15,7 @@ import {
 } from '../shared/roundRules';
 import { CircleCanvas } from '../components/CircleCanvas';
 import { FinalWinnersScreen } from '../components/FinalWinnersScreen';
+import { RoundRankingBalloon } from '../components/RoundRankingBalloon';
 
 interface ParticipantMobileViewProps {
   snapshot: PublicGameSnapshot | null;
@@ -440,12 +441,11 @@ export const ParticipantMobileView: React.FC<ParticipantMobileViewProps> = ({
     );
   }
 
-  // ==================== TELA 6: RESULTADO INDIVIDUAL DA RODADA ====================
+  // ==================== TELA 6: RESULTADO E BALÃO DE RANKING DA RODADA ====================
   if (snapshot.status === 'ROUND_FINISHED') {
-    const finishedRecord = me.roundHistory[snapshot.currentRound] || liveRoundSummary;
     return (
       <div className="min-h-screen flex flex-col justify-between p-4 max-w-md mx-auto space-y-4">
-        {/* Topo com Saldo e Posição */}
+        {/* Topo com Saldo e Posição Geral */}
         <div className="gartic-glass-sm p-4 flex items-center justify-between">
           <div>
             <div className="text-[10px] font-black uppercase tracking-widest text-violet-300">
@@ -457,7 +457,7 @@ export const ParticipantMobileView: React.FC<ParticipantMobileViewProps> = ({
           </div>
           <div className="text-right">
             <div className="text-[10px] font-black uppercase tracking-widest text-violet-300">
-              Classificação
+              Classificação Geral
             </div>
             <div className="font-display text-2xl font-black text-amber-300">
               {myRankPosition}º Lugar
@@ -465,84 +465,30 @@ export const ParticipantMobileView: React.FC<ParticipantMobileViewProps> = ({
           </div>
         </div>
 
-        {/* Cartão de Recompensa da Rodada */}
-        <div className="gartic-glass p-6 space-y-5 my-auto text-center animate-pop">
-          <div className="inline-block bg-emerald-400 text-[#092E19] font-display font-black text-[11px] uppercase tracking-widest px-4 py-1 rounded-full">
-            Rodada {snapshot.currentRound} Finalizada
-          </div>
-
-          <div>
-            <h2 className="font-display text-2xl font-black text-white">
-              {currentRoundMeta.shortTitle}
-            </h2>
-            <p className="text-xs font-bold text-violet-300 mt-0.5">
-              Resumo do seu pagamento nesta fase
-            </p>
-          </div>
-
-          {/* Valor Recebido em Destaque */}
-          <div className="py-5 px-4 rounded-3xl bg-gradient-to-b from-amber-300 to-amber-500 text-[#23114B] shadow-[0_8px_0_#9E6B00]">
-            <div className="text-[11px] font-black uppercase tracking-widest opacity-85">
-              Você Recebeu
-            </div>
-            <div className="font-display text-4xl font-black mt-1">
-              + {formatCurrencyBRL(finishedRecord.amountEarned)}
-            </div>
-          </div>
-
-          <div className="bg-[#180A38]/90 border border-white/10 rounded-2xl p-3.5 text-xs font-bold text-violet-100 leading-relaxed">
-            {finishedRecord.explanation}
-          </div>
-
-          <div className="grid grid-cols-3 gap-2 text-center">
-            <div className="p-2.5 rounded-xl bg-white/8 border border-white/10">
-              <div className="text-[10px] font-black text-violet-300 uppercase">Círculos</div>
-              <div className="font-display text-xl font-black text-white mt-0.5">
-                {finishedRecord.validCirclesCount}
-              </div>
-            </div>
-            <div className="p-2.5 rounded-xl bg-white/8 border border-white/10">
-              <div className="text-[10px] font-black text-violet-300 uppercase">Melhor</div>
-              <div className="font-display text-xl font-black text-amber-300 mt-0.5">
-                {formatPercentageBR(finishedRecord.bestAccuracy)}
-              </div>
-            </div>
-            <div className="p-2.5 rounded-xl bg-white/8 border border-white/10">
-              <div className="text-[10px] font-black text-violet-300 uppercase">
-                {snapshot.currentRound === 5 ? 'Média Últ. 5' : 'Média'}
-              </div>
-              <div className="font-display text-xl font-black text-cyan-300 mt-0.5">
-                {snapshot.currentRound === 5
-                  ? finishedRecord.lastFiveAverageAccuracy !== null
-                    ? formatPercentageBR(finishedRecord.lastFiveAverageAccuracy)
-                    : '—'
-                  : formatPercentageBR(finishedRecord.averageAccuracy)}
-              </div>
-            </div>
-          </div>
-
-          <div className="pt-1">
-            <div className="inline-flex items-center gap-2 bg-white/10 text-violet-200 px-4 py-2.5 rounded-2xl text-xs font-extrabold">
-              <span className="w-2 h-2 rounded-full bg-amber-300 animate-ping" />
-              <span>
-                {snapshot.currentRound < 5
-                  ? `Aguardando início da Rodada ${snapshot.currentRound + 1}...`
-                  : 'Aguardando exibição do Pódio Final...'}
-              </span>
-            </div>
-          </div>
+        {/* Balão de Ranking por Rodada inspirado no Gartic (fecha ao iniciar próxima rodada) */}
+        <div className="my-auto">
+          <RoundRankingBalloon
+            snapshot={snapshot}
+            currentParticipantId={me.id}
+            variant="mobile"
+          />
         </div>
 
-        {/* Top 3 Rápido */}
+        {/* Ranking Total Acumulado ao pé da página do jogador */}
         <div className="gartic-glass-sm p-3.5">
           <div className="text-[10px] font-black uppercase tracking-widest text-violet-300 mb-2">
-            Líderes da Sala
+            Ranking Total da Sala (Acumulado)
           </div>
-          <div className="space-y-1.5">
-            {snapshot.participants.slice(0, 3).map((p, i) => (
+          <div className="space-y-1.5 max-h-36 overflow-y-auto pr-1">
+            {snapshot.participants.map((p, i) => (
               <div key={p.id} className="flex items-center justify-between text-xs font-extrabold">
                 <span className="text-white truncate">
                   <strong className="text-amber-300">{i + 1}º</strong> {p.nickname}
+                  {p.id === me.id && (
+                    <span className="ml-1.5 text-[9px] uppercase bg-amber-300 text-[#23114B] px-1.5 py-0.5 rounded-full">
+                      Você
+                    </span>
+                  )}
                 </span>
                 <span className="text-emerald-300">{formatCurrencyBRL(p.balance)}</span>
               </div>
@@ -555,8 +501,8 @@ export const ParticipantMobileView: React.FC<ParticipantMobileViewProps> = ({
 
   // ==================== TELA 5: TELA DE DESENHO MOBILE (RODADA ATIVA) ====================
   const isPaused = snapshot.status === 'ROUND_PAUSED';
-  const isUrgentTime = displayRemainingSeconds <= 8;
-  const totalSec = snapshot.config.roundDurationSeconds || 30;
+  const isUrgentTime = displayRemainingSeconds <= 10;
+  const totalSec = snapshot.config.roundDurationSeconds || 45;
   const timePercent = Math.max(0, Math.min(100, (displayRemainingSeconds / totalSec) * 100));
 
   return (

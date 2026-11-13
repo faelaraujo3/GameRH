@@ -10,6 +10,7 @@ import {
   getRoundsMetadata,
 } from '../shared/roundRules';
 import { FinalWinnersScreen } from '../components/FinalWinnersScreen';
+import { RoundRankingBalloon } from '../components/RoundRankingBalloon';
 
 interface ScoreboardDesktopViewProps {
   snapshot: PublicGameSnapshot | null;
@@ -75,8 +76,8 @@ export const ScoreboardDesktopView: React.FC<ScoreboardDesktopViewProps> = ({
   const topThree = participants.slice(0, 3);
   const maxBalance = Math.max(500, participants[0]?.balance || 500);
 
-  const isUrgent = snapshot.status === 'ROUND_ACTIVE' && displayRemainingSeconds <= 8;
-  const totalSec = snapshot.config.roundDurationSeconds || 30;
+  const isUrgent = snapshot.status === 'ROUND_ACTIVE' && displayRemainingSeconds <= 10;
+  const totalSec = snapshot.config.roundDurationSeconds || 45;
   const timePercent =
     snapshot.status === 'ROUND_ACTIVE' || snapshot.status === 'ROUND_PAUSED'
       ? Math.max(0, Math.min(100, (displayRemainingSeconds / totalSec) * 100))
@@ -271,7 +272,12 @@ export const ScoreboardDesktopView: React.FC<ScoreboardDesktopViewProps> = ({
             </div>
           ) : (
             <div className="space-y-6 flex-1 flex flex-col">
-              {/* DESTAQUE ESPECIAL PARA OS 3 PRIMEIROS COLOCADOS */}
+              {/* BALÃO DE RANKING DA RODADA AO FINALIZAR A FASE (SOME AO INICIAR PRÓXIMA RODADA) */}
+              {snapshot.status === 'ROUND_FINISHED' && (
+                <RoundRankingBalloon snapshot={snapshot} variant="desktop" />
+              )}
+
+              {/* DESTAQUE ESPECIAL PARA OS 3 PRIMEIROS COLOCADOS DO RANKING TOTAL */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {topThree.map((p, idx) => {
                   const liveStats = calculateRoundPayoutForParticipant(

@@ -4,7 +4,7 @@ import { PublicGameSnapshot } from '../shared/types';
 export function useGameSync() {
   const [snapshot, setSnapshot] = useState<PublicGameSnapshot | null>(null);
   const [connected, setConnected] = useState<boolean>(false);
-  const [displayRemainingSeconds, setDisplayRemainingSeconds] = useState<number>(30);
+  const [displayRemainingSeconds, setDisplayRemainingSeconds] = useState<number>(45);
 
   const serverClockOffsetRef = useRef<number>(0);
   const snapshotRef = useRef<PublicGameSnapshot | null>(null);

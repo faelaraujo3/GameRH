@@ -74,7 +74,7 @@ export class GameEngine {
           DEFAULT_REMUNERATION_CONFIG.round4Goals.minAccuracyThreshold;
         this.saveToDisk();
       }
-      if (this.room.config.roundDurationSeconds === 60) {
+      if (this.room.config.roundDurationSeconds === 60 || this.room.config.roundDurationSeconds === 30) {
         this.room.config.roundDurationSeconds = DEFAULT_REMUNERATION_CONFIG.roundDurationSeconds;
         this.room.roundDurationMs = this.room.config.roundDurationSeconds * 1000;
         if (this.room.status === 'LOBBY' || this.room.status === 'ROUND_INTRO') {

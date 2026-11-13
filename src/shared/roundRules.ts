@@ -18,7 +18,7 @@ export interface RoundMetadata {
 }
 
 export const DEFAULT_REMUNERATION_CONFIG: RemunerationConfig = {
-  roundDurationSeconds: 30,
+  roundDurationSeconds: 45,
   round1FixedSalary: 500,
   round2PerCircleReward: 50,
   round3SkillTiers: {
