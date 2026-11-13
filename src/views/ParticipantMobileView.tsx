@@ -444,42 +444,23 @@ export const ParticipantMobileView: React.FC<ParticipantMobileViewProps> = ({
   // ==================== TELA 6: RESULTADO E BALÃO DE RANKING DA RODADA ====================
   if (snapshot.status === 'ROUND_FINISHED') {
     return (
-      <div className="min-h-screen flex flex-col justify-between p-4 max-w-md mx-auto space-y-4">
-        {/* Topo com Saldo e Posição Geral */}
-        <div className="gartic-glass-sm p-4 flex items-center justify-between">
-          <div>
-            <div className="text-[10px] font-black uppercase tracking-widest text-violet-300">
-              Saldo Acumulado
-            </div>
-            <div className="font-display text-2xl font-black text-emerald-300">
-              {formatCurrencyBRL(me.balance)}
-            </div>
-          </div>
-          <div className="text-right">
-            <div className="text-[10px] font-black uppercase tracking-widest text-violet-300">
-              Classificação Geral
-            </div>
-            <div className="font-display text-2xl font-black text-amber-300">
-              {myRankPosition}º Lugar
-            </div>
-          </div>
-        </div>
+      <div className="h-[100dvh] flex flex-col justify-between p-3 max-w-md mx-auto overflow-hidden">
+        {/* Balão de Ranking por Rodada ocupando quase a tela inteira desde o topo */}
+        <RoundRankingBalloon
+          snapshot={snapshot}
+          currentParticipantId={me.id}
+          variant="mobile"
+        />
 
-        {/* Balão de Ranking por Rodada inspirado no Gartic (fecha ao iniciar próxima rodada) */}
-        <div className="my-auto">
-          <RoundRankingBalloon
-            snapshot={snapshot}
-            currentParticipantId={me.id}
-            variant="mobile"
-          />
-        </div>
-
-        {/* Ranking Total Acumulado ao pé da página do jogador */}
-        <div className="gartic-glass-sm p-3.5">
-          <div className="text-[10px] font-black uppercase tracking-widest text-violet-300 mb-2">
-            Ranking Total da Sala (Acumulado)
+        {/* Ranking Total Acumulado compacto ao pé da página do jogador */}
+        <div className="gartic-glass-sm p-3 mt-2.5 shrink-0">
+          <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-violet-300 mb-1.5">
+            <span>Ranking Total (Acumulado)</span>
+            <span className="text-amber-300">
+              Você: {myRankPosition}º ({formatCurrencyBRL(me.balance)})
+            </span>
           </div>
-          <div className="space-y-1.5 max-h-36 overflow-y-auto pr-1">
+          <div className="space-y-1 max-h-24 overflow-y-auto pr-1">
             {snapshot.participants.map((p, i) => (
               <div key={p.id} className="flex items-center justify-between text-xs font-extrabold">
                 <span className="text-white truncate">
@@ -490,7 +471,7 @@ export const ParticipantMobileView: React.FC<ParticipantMobileViewProps> = ({
                     </span>
                   )}
                 </span>
-                <span className="text-emerald-300">{formatCurrencyBRL(p.balance)}</span>
+                <span className="text-emerald-300 shrink-0 pl-2">{formatCurrencyBRL(p.balance)}</span>
               </div>
             ))}
           </div>
